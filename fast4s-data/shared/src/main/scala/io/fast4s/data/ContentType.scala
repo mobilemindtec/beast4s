@@ -18,9 +18,15 @@ object ContentType:
 
   def make(text: String): ContentType =
     val options = List(
-      Json, JavaScript, Html, Text, CSS, PNG, JPG, JPEG
+      Json,
+      JavaScript,
+      Html,
+      Text,
+      CSS,
+      PNG,
+      JPG,
+      JPEG
     )
     options
       .find(_.mimeType == text)
       .getOrElse(Other(text))
-

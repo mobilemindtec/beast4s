@@ -33,7 +33,9 @@ class HttpServerBuilder:
     cfg = cfg.copy(recover = Some(recover))
     this
 
-  def withInterceptor(status: Int)(interceptor: => Interceptor): HttpServerBuilder =
+  def withInterceptor(status: Int)(
+      interceptor: => Interceptor
+  ): HttpServerBuilder =
     cfg = cfg.copy(interceptors = cfg.interceptors + (status -> interceptor))
     this
 

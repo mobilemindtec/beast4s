@@ -31,11 +31,8 @@ object HttpServerAsync:
       beastCallback(req, resp.ptr())
   }
 
-
-
-trait HttpServerAsync(val host: String,
-                      val port: Int,
-                      val workers: Int = 1) extends HttpServer:
+trait HttpServerAsync(val host: String, val port: Int, val workers: Int = 1)
+    extends HttpServer:
 
   override def run: Int =
     Zone:
@@ -44,4 +41,5 @@ trait HttpServerAsync(val host: String,
         port.toUShort,
         workers.toUShort,
         CFuncPtr3.fromScalaFunction(threadStart),
-        CFuncPtr2.fromScalaFunction(HttpServerAsync.handle))
+        CFuncPtr2.fromScalaFunction(HttpServerAsync.handle)
+      )

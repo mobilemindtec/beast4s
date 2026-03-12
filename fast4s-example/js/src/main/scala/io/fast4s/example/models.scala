@@ -13,7 +13,7 @@ object models:
       Encoder.typ[Person]
         |> Encoder.field("id", _.id)
         |> Encoder.field("name", _.name)
-  
+
     val decoder: Decoder[Person] =
       Decoder.typ[Person]
         |> Decoder.field("id", (p, i: Int) => p.copy(id = i))
@@ -21,7 +21,4 @@ object models:
 
     def fromJson(s: String): Person = decoder.parse(s)
 
-    extension (p: Person)
-      def toJson: String = encoder.encodeObject(p)
-
-
+    extension (p: Person) def toJson: String = encoder.encodeObject(p)

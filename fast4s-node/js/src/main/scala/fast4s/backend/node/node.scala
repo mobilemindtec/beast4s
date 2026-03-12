@@ -5,8 +5,8 @@ import io.fast4s.core.{HttpServerConfigs, HttpServerCreator, requestBuilder}
 
 package object node:
 
-    //given sync: HttpServerCreator =
-    //  (cfg: HttpServerConfigs) => HttpServerSync(cfg)
+  // given sync: HttpServerCreator =
+  //  (cfg: HttpServerConfigs) => HttpServerSync(cfg)
 
-    given async: HttpServerCreator =
-      (cfg: HttpServerConfigs) => HttpServerAsync(cfg)
+  given async: HttpServerCreator =
+    (cfg: HttpServerConfigs) => HttpServerAsync(cfg)

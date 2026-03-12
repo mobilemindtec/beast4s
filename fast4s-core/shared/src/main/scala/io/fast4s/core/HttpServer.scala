@@ -64,12 +64,14 @@ private[fast4s] object HttpServer:
             else resp
           each(res, xs)
     each(response, server.leave)
-    */
-  private inline def applyInterceptors(request: Request)(response: Response): Response =
+   */
+  private inline def applyInterceptors(request: Request)(
+      response: Response
+  ): Response =
     @tailrec
     def each(resp: Response, items: Seq[Interceptor]): Response =
       items match
-        case Nil => resp
+        case Nil     => resp
         case x :: xs => each(x.apply(request, resp), xs)
     val its = server.interceptors
       .filter(_._1 == response.status.code)
@@ -78,22 +80,21 @@ private[fast4s] object HttpServer:
     each(response, its)
 
   inline def handle(request: Request): Response =
-      try {
-        /*
+    try {
+      /*
         val resp =
           applyEnter(request) match
             case r: Request => dispatch(r)
             case r: Response => r
         applyLeave(request, resp) |> applyInterceptors(request)
-         */
-        dispatch(request) |> applyInterceptors(request)
-      } catch
-        case err: Throwable =>
-          println("Error during http server handle: " + err)
-          server
-            .recover
-            .map(f => f(request, err))
-            .getOrElse(Response.serverError())
+       */
+      dispatch(request) |> applyInterceptors(request)
+    } catch
+      case err: Throwable =>
+        println("Error during http server handle: " + err)
+        server.recover
+          .map(f => f(request, err))
+          .getOrElse(Response.serverError())
 
   inline def dispatch(request: Request): Response =
     val target = request.target
@@ -104,8 +105,7 @@ private[fast4s] object HttpServer:
       request.headers
     )
 
-    server
-      .router
+    server.router
       .dispatch(method, target, extra) match
-        case Some(resp) => resp
-        case _ => Response.notFound("Not Found")
+      case Some(resp) => resp
+      case _          => Response.notFound("Not Found")

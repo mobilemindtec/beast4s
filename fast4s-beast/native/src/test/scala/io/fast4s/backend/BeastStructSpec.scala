@@ -10,14 +10,18 @@ import scala.scalanative.unsafe.Zone
 
 class BeastStructSpec extends AnyFunSuite with Matchers:
 
-  test("struct converter test"){
+  test("struct converter test") {
 
     Zone:
       val req = Request(
         method = HttpMethod.Get,
         target = "/",
         body = "request!",
-        headers = Map("Content-Type" -> "application/json; charset=UTF-8", "Accept-Encoding" -> "gzip", "Accept-Language" -> "en-US,es;q=0.5"),
+        headers = Map(
+          "Content-Type" -> "application/json; charset=UTF-8",
+          "Accept-Encoding" -> "gzip",
+          "Accept-Language" -> "en-US,es;q=0.5"
+        )
       )
 
       val reqPtr = req.ptr()
@@ -27,7 +31,11 @@ class BeastStructSpec extends AnyFunSuite with Matchers:
       val resp = Response(
         status = HttpStatus.OK,
         body = "response!!",
-        headers = Map("Content-Type" -> "application/json; charset=UTF-8", "Accept-Encoding" -> "gzip", "Accept-Language" -> "en-US,es;q=0.5")
+        headers = Map(
+          "Content-Type" -> "application/json; charset=UTF-8",
+          "Accept-Encoding" -> "gzip",
+          "Accept-Language" -> "en-US,es;q=0.5"
+        )
       )
 
       val respPtr = resp.ptr()
@@ -42,7 +50,11 @@ class BeastStructSpec extends AnyFunSuite with Matchers:
         method = HttpMethod.Get,
         target = "/",
         bodyRaw = Seq('A', 'B', 'C', 'D'),
-        headers = Map("Content-Type" -> "application/json; charset=UTF-8", "Accept-Encoding" -> "gzip", "Accept-Language" -> "en-US,es;q=0.5"),
+        headers = Map(
+          "Content-Type" -> "application/json; charset=UTF-8",
+          "Accept-Encoding" -> "gzip",
+          "Accept-Language" -> "en-US,es;q=0.5"
+        )
       )
 
       val reqPtr = req.ptr()
@@ -53,7 +65,11 @@ class BeastStructSpec extends AnyFunSuite with Matchers:
       val resp = Response(
         status = HttpStatus.OK,
         rawBody = Seq('A', 'B', 'C', 'D'),
-        headers = Map("Content-Type" -> "application/json; charset=UTF-8", "Accept-Encoding" -> "gzip", "Accept-Language" -> "en-US,es;q=0.5")
+        headers = Map(
+          "Content-Type" -> "application/json; charset=UTF-8",
+          "Accept-Encoding" -> "gzip",
+          "Accept-Language" -> "en-US,es;q=0.5"
+        )
       )
 
       val respPtr = resp.ptr()
@@ -61,7 +77,3 @@ class BeastStructSpec extends AnyFunSuite with Matchers:
 
       respOther `shouldBe` resp
   }
-
-
-
-

@@ -16,31 +16,32 @@ enum HttpMethod(val verb: String):
 
 object HttpMethod:
   def apply(verb: String): HttpMethod =
-    val values = Head :: Options :: Patch :: Get :: Post :: Put :: Delete :: Connect :: Trace :: Nil
+    val values =
+      Head :: Options :: Patch :: Get :: Post :: Put :: Delete :: Connect :: Trace :: Nil
     values.find(m => m.verb.equals(verb)).getOrElse(Other(verb))
 
 extension (method: HttpMethod)
   def toMethod: Method = method match
-    case HttpMethod.Get => Method.GET
-    case HttpMethod.Post => Method.POST
-    case HttpMethod.Put => Method.PUT
-    case HttpMethod.Delete => Method.DELETE
+    case HttpMethod.Get     => Method.GET
+    case HttpMethod.Post    => Method.POST
+    case HttpMethod.Put     => Method.PUT
+    case HttpMethod.Delete  => Method.DELETE
     case HttpMethod.Options => Method.OPTIONS
-    case HttpMethod.Patch => Method.PATCH
-    case HttpMethod.Head => Method.HEAD
+    case HttpMethod.Patch   => Method.PATCH
+    case HttpMethod.Head    => Method.HEAD
     case HttpMethod.Connect => Method.CONNECT
-    case HttpMethod.Trace => Method.TRACE
-    case _ => Method.ANY
+    case HttpMethod.Trace   => Method.TRACE
+    case _                  => Method.ANY
 
 extension (method: Method)
   def toHttpMethod: HttpMethod = method match
-    case Method.GET => HttpMethod.Get
-    case Method.POST => HttpMethod.Post
-    case Method.PUT => HttpMethod.Put
-    case Method.DELETE => HttpMethod.Delete
+    case Method.GET     => HttpMethod.Get
+    case Method.POST    => HttpMethod.Post
+    case Method.PUT     => HttpMethod.Put
+    case Method.DELETE  => HttpMethod.Delete
     case Method.OPTIONS => HttpMethod.Options
-    case Method.PATCH => HttpMethod.Patch
-    case Method.HEAD => HttpMethod.Head
+    case Method.PATCH   => HttpMethod.Patch
+    case Method.HEAD    => HttpMethod.Head
     case Method.CONNECT => HttpMethod.Connect
-    case Method.TRACE => HttpMethod.Trace
-    case Method.ANY => HttpMethod.Other("")
+    case Method.TRACE   => HttpMethod.Trace
+    case Method.ANY     => HttpMethod.Other("")

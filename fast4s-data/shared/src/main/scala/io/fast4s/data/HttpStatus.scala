@@ -8,7 +8,8 @@ enum HttpStatus(val code: Int, val reason: String):
   case OK extends HttpStatus(200, "OK")
   case Created extends HttpStatus(201, "Created")
   case Accepted extends HttpStatus(202, "Accepted")
-  case NonAuthoritativeInformation extends HttpStatus(203, "Non-authoritative Information")
+  case NonAuthoritativeInformation
+      extends HttpStatus(203, "Non-authoritative Information")
   case NoContent extends HttpStatus(204, "No Content")
   case ResetContent extends HttpStatus(205, "Reset Content")
   case PartialContent extends HttpStatus(206, "Partial Content")
@@ -30,7 +31,8 @@ enum HttpStatus(val code: Int, val reason: String):
   case NotFound extends HttpStatus(404, "Not Found")
   case MethodNotAllowed extends HttpStatus(405, "Method Not Allowed")
   case NotAcceptable extends HttpStatus(406, "Not Acceptable")
-  case ProxyAuthenticationRequired extends HttpStatus(407, "Proxy Authentication Required")
+  case ProxyAuthenticationRequired
+      extends HttpStatus(407, "Proxy Authentication Required")
   case RequestTimeout extends HttpStatus(408, "Request Timeout")
   case Conflict extends HttpStatus(409, "Conflict")
   case Gone extends HttpStatus(410, "Gone")
@@ -39,7 +41,8 @@ enum HttpStatus(val code: Int, val reason: String):
   case PayloadTooLarge extends HttpStatus(413, "Payload Too Large")
   case RequestURITooLong extends HttpStatus(414, "Request-URI Too Long")
   case UnsupportedMediaType extends HttpStatus(415, "Unsupported Media Type")
-  case RequestedRangeNotSatisfiable extends HttpStatus(416, "Requested Range Not Satisfiable")
+  case RequestedRangeNotSatisfiable
+      extends HttpStatus(416, "Requested Range Not Satisfiable")
   case ExpectationFailed extends HttpStatus(417, "Expectation Failed")
   case ImAteapot extends HttpStatus(418, "I’m a teapot")
   case MisdirectedRequest extends HttpStatus(421, "Misdirected Request")
@@ -49,22 +52,28 @@ enum HttpStatus(val code: Int, val reason: String):
   case UpgradeRequired extends HttpStatus(426, "Upgrade Required")
   case PreconditionRequired extends HttpStatus(428, "Precondition Required")
   case TooManyRequests extends HttpStatus(429, "Too Many Requests")
-  case RequestHeaderFieldsTooLarge extends HttpStatus(431, "Request Header Fields Too Large")
-  case ConnectionClosedWithoutResponse extends HttpStatus(444, "Connection Closed Without Response")
-  case UnavailableForLegalReasons extends HttpStatus(451, "Unavailable For Legal Reasons")
+  case RequestHeaderFieldsTooLarge
+      extends HttpStatus(431, "Request Header Fields Too Large")
+  case ConnectionClosedWithoutResponse
+      extends HttpStatus(444, "Connection Closed Without Response")
+  case UnavailableForLegalReasons
+      extends HttpStatus(451, "Unavailable For Legal Reasons")
   case ClientClosedRequest extends HttpStatus(499, "Client Closed Request")
   case InternalServerError extends HttpStatus(500, "Internal Server Error")
   case NotImplemented extends HttpStatus(501, "Not Implemented")
   case BadGateway extends HttpStatus(502, "Bad Gateway")
   case ServiceUnavailable extends HttpStatus(503, "Service Unavailable")
   case GatewayTimeout extends HttpStatus(504, "Gateway Timeout")
-  case HTTPVersionNotSupported extends HttpStatus(505, "HTTP Version Not Supported")
+  case HTTPVersionNotSupported
+      extends HttpStatus(505, "HTTP Version Not Supported")
   case VariantAlsoNegotiates extends HttpStatus(506, "Variant Also Negotiates")
   case InsufficientStorage extends HttpStatus(507, "Insufficient Storage")
   case LoopDetected extends HttpStatus(508, "Loop Detected")
   case NotExtended extends HttpStatus(510, "Not Extended")
-  case NetworkAuthenticationRequired extends HttpStatus(511, "Network Authentication Required")
-  case NetworkConnectTimeoutError extends HttpStatus(599, "Network Connect Timeout Error")
+  case NetworkAuthenticationRequired
+      extends HttpStatus(511, "Network Authentication Required")
+  case NetworkConnectTimeoutError
+      extends HttpStatus(599, "Network Connect Timeout Error")
 
 object HttpStatus:
   def make(code: Int): HttpStatus =
@@ -132,4 +141,4 @@ object HttpStatus:
       case 510 => NotExtended
       case 511 => NetworkAuthenticationRequired
       case 599 => NetworkConnectTimeoutError
-      case _ => StatusCode(code)
+      case _   => StatusCode(code)

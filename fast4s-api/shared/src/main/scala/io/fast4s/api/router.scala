@@ -10,6 +10,5 @@ object router:
   type Controller = types.Controller[Request, Response]
   type Handler = types.HttpHandler[Request, Response]
   type Dispatcher = types.Dispatcher[Request, Response]
-  //type MiddlewareEnter = types.MiddlewareEnter[Request, Response]
-  //type MiddlewareLeave = types.MiddlewareLeave[Request, Response]
-
+  // type MiddlewareEnter = types.MiddlewareEnter[Request, Response]
+  // type MiddlewareLeave = types.MiddlewareLeave[Request, Response]

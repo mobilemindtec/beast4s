@@ -27,19 +27,24 @@ object Node:
   @js.native
   @JSImport("node:http", JSImport.Namespace)
   object Http extends js.Object:
-    def createServer(handler: js.Function2[IncomingMessage, ServerResponse, Unit]): Server = js.native
+    def createServer(
+        handler: js.Function2[IncomingMessage, ServerResponse, Unit]
+    ): Server = js.native
 
   extension (req: IncomingMessage)
-    /** Build the "complete request" bridge object expected by fast4s core (RawRequest). */
+    /** Build the "complete request" bridge object expected by fast4s core
+      * (RawRequest).
+      */
     def request(onComplete: Request => Unit): Unit =
       val headersMap: Map[String, String] =
         req.headers.iterator.map { case (k, v) =>
           val valueStr =
             if js.isUndefined(v) || v == null then ""
-            else v match
-              case arr: js.Array[?] =>
-                arr.map(_.toString).mkString(",")
-              case other => other.toString
+            else
+              v match
+                case arr: js.Array[?] =>
+                  arr.map(_.toString).mkString(",")
+                case other => other.toString
           k -> valueStr
         }.toMap
 
@@ -68,19 +73,23 @@ object Node:
           catch case _: Throwable => ""
         val request = Request(
           target = req.url.getOrElse("/"),
-          method = req.method.map { s => HttpMethod(s) }.getOrElse(HttpMethod.Get),
+          method =
+            req.method.map { s => HttpMethod(s) }.getOrElse(HttpMethod.Get),
           body = bodyStr,
           bodyRaw = bodyRaw,
-          headers = headersMap)
+          headers = headersMap
+        )
         onComplete(request)
 
       req
-        .on("data",onData)
+        .on("data", onData)
         .on("end", onEnd)
       ()
 
   extension (resp: ServerResponse)
-    /** Write the "complete response" bridge object (fast4s Response) into Node's ServerResponse. */
+    /** Write the "complete response" bridge object (fast4s Response) into
+      * Node's ServerResponse.
+      */
     def respond(r: Response): Unit =
       val h = js.Dictionary.empty[String]
 
@@ -88,7 +97,8 @@ object Node:
       r.headers.foreach { case (k, v) => h.update(k, v) }
 
       // Ensure content-type exists when fast4s has one
-      val hasContentType = r.headers.keys.exists(_.equalsIgnoreCase("content-type"))
+      val hasContentType =
+        r.headers.keys.exists(_.equalsIgnoreCase("content-type"))
       if !hasContentType then h.update("content-type", r.contentType.mimeType)
 
       resp.writeHead(r.status.code, h)
@@ -114,18 +124,22 @@ object HttpServerAsync:
       def enter: Seq[NSEnter] = cfg.enter
     }
 
-  def handle(nodeReq: Node.IncomingMessage, nodeResp: Node.ServerResponse): Unit =
+  def handle(
+      nodeReq: Node.IncomingMessage,
+      nodeResp: Node.ServerResponse
+  ): Unit =
     nodeReq.request { req =>
       val resp = HttpServer.handle(req)
       nodeResp.respond(resp)
     }
 
-trait HttpServerAsync(val host: String,
-                      val port: Int,
-                      val workers: Int = 1) extends HttpServer:
+trait HttpServerAsync(val host: String, val port: Int, val workers: Int = 1)
+    extends HttpServer:
 
   override def run: Int =
     Node.Http
-      .createServer { (nodeReq, nodeResp) => HttpServerAsync.handle(nodeReq, nodeResp) }
+      .createServer { (nodeReq, nodeResp) =>
+        HttpServerAsync.handle(nodeReq, nodeResp)
+      }
       .listen(port, host, () => println(s"Server listen on http://$host:$port"))
     0

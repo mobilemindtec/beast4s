@@ -31,9 +31,9 @@ package object fast4s:
     Put,
     Delete,
     Trace,
-    Connect,
+    Connect
   }
-  
+
   export io.fast4s.api.Fast4s
   export io.fast4s.api.Fast4s.fast
 
